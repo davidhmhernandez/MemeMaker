@@ -8,16 +8,22 @@ import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Created by Evan Anger on 7/28/14.
  */
 public class FileUtilities {
     static final int  TAM_BUFFER =1024;
+    private final static String STORAGE_TYPE = StorageType.PUBLIC_EXTERNAL;
+    private final static String ALBUM_NAME = "mememaker";
+    private final static String TAG = "Error";
 
 
     public static void saveAssetImage(Context context, String assetName) {
@@ -91,5 +97,59 @@ public class FileUtilities {
             e.printStackTrace();
         }
     }
+
+    public static ArrayList<File> filtrado(Context c){
+        File fileDirectory = getFilesDirectory(c);
+        final ArrayList<File>filteredFiles = new ArrayList();
+
+        fileDirectory.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                if(pathname.getAbsolutePath().contains("jpg")){
+                    filteredFiles.add(pathname);
+                    return true;
+                }else if(pathname.getAbsolutePath().contains("png")){
+                    filteredFiles.add(pathname);
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        });
+
+        return filteredFiles;
+
+    }
+    private static File getFilesDirectory(Context c){
+        if(STORAGE_TYPE.equals(StorageType.INTERNAL)){
+            c.getFilesDir();
+        }else{
+            if(isExternalStorageAvailable()){
+                if(STORAGE_TYPE.equals(StorageType.PRIVATE_EXTERNAL)){
+                    c.getExternalFilesDir(null);
+                }else{
+                    File file = new File(Environment.getExternalStoragePublicDirectory(
+                            Environment.DIRECTORY_PICTURES),ALBUM_NAME);
+                    if(!file.mkdirs()){
+                        Log.e(TAG,"Directory not created");
+                    }
+                    return file;
+                }
+            }
+        }
+
+        return null;
+
+    }
+    private static boolean isExternalStorageAvailable() {
+        String state = Environment.getExternalStorageState();
+        if(Environment.MEDIA_MOUNTED.equals(state)){
+            return true;
+        }
+        return false;
+    }
+
+
+
 
 }

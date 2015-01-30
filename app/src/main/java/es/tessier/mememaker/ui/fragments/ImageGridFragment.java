@@ -21,6 +21,7 @@ import es.tessier.mememaker.models.ImageGridItem;
 import es.tessier.mememaker.ui.activities.CreateMemeActivity;
 import es.tessier.mememaker.ui.activities.MemeSettingsActivity;
 import es.tessier.mememaker.R;
+import es.tessier.mememaker.utils.FileUtilities;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -66,6 +67,7 @@ public class ImageGridFragment extends Fragment {
 
     private ArrayList extractFiles() {
         final ArrayList imageItems = new ArrayList();
+        ArrayList<File> imagenes = FileUtilities.filtrado(this.getActivity());
         return imageItems;
     }
 
