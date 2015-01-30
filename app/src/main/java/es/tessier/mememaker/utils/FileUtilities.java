@@ -16,12 +16,14 @@ import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import es.tessier.mememaker.MemeMakerApplicationSettings;
+
 /**
  * Created by Evan Anger on 7/28/14.
  */
 public class FileUtilities {
     static final int  TAM_BUFFER =1024;
-    private final static String STORAGE_TYPE = StorageType.PUBLIC_EXTERNAL;
+    //private final static String STORAGE_TYPE = StorageType.PUBLIC_EXTERNAL;
     private final static String ALBUM_NAME = "mememaker";
     private final static String TAG = "Error";
 
@@ -121,11 +123,13 @@ public class FileUtilities {
 
     }
     private static File getFilesDirectory(Context c){
-        if(STORAGE_TYPE.equals(StorageType.INTERNAL)){
+        MemeMakerApplicationSettings settings = new MemeMakerApplicationSettings(c);
+        String storageType = settings.getStoragePreference();
+        if(storageType.equals(StorageType.INTERNAL)){
             c.getFilesDir();
         }else{
             if(isExternalStorageAvailable()){
-                if(STORAGE_TYPE.equals(StorageType.PRIVATE_EXTERNAL)){
+                if(storageType.equals(StorageType.PRIVATE_EXTERNAL)){
                     c.getExternalFilesDir(null);
                 }else{
                     File file = new File(Environment.getExternalStoragePublicDirectory(
