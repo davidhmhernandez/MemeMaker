@@ -35,10 +35,10 @@ public class MemeSQLiteHelper extends SQLiteOpenHelper{
     }
 
     //Meme Table functionality
-    static final String MEMES_TABLE ="MEMES";
-    static final String COLUMN_MEMES_ASSET ="asset";
-    static final String COLUMN_MEMES_NAME ="name";
-    static final String COLUMN_MEMES_ID ="_id";
+    public static final String MEMES_TABLE ="MEMES";
+    public static final String COLUMN_MEMES_ASSET ="asset";
+    public static final String COLUMN_MEMES_NAME ="name";
+    public static final String COLUMN_MEMES_ID ="_id";
 
     static final String CREATE_TABLE_MEMES = "CREATE TABLE "+MEMES_TABLE + " ( "+COLUMN_MEMES_ID + "INTEGER PRIMARY KEY AUTOINCREMENT "+ COLUMN_MEMES_ASSET + " TEX NOT NULL," + COLUMN_MEMES_NAME + " TEXT NOT NULL );";
 

@@ -1,12 +1,17 @@
 package es.tessier.mememaker.models;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import es.tessier.mememaker.database.MemeDatasource;
+import es.tessier.mememaker.database.MemeSQLiteHelper;
 
 /**
  * Created by Evan Anger on 8/17/14.
@@ -54,4 +59,8 @@ public class Meme implements Serializable {
         }
         return BitmapFactory.decodeFile(mAssetLocation);
     }
+
+
+
+
 }
