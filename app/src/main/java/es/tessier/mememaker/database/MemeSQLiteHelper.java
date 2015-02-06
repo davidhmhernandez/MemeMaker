@@ -13,7 +13,8 @@ import java.sql.SQLException;
 public class MemeSQLiteHelper extends SQLiteOpenHelper{
 
     public final static String DB_NAME ="memes.db";
-    public final static int DB_VERSION = 1;
+    public final static int DB_VERSION = 2;
+    public final static String ALTER_ADD_CREATE_DATE= MemeSQLiteHelper.COLUMN_CREATE_DATE;
     public static final String TAG = MemeSQLiteHelper.class.getName();
 
     public MemeSQLiteHelper(Context context){
@@ -31,16 +32,19 @@ public class MemeSQLiteHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        switch (oldVersion){
+            case 1:db.execSQL(ALTER_ADD_CREATE_DATE);
+        }
     }
 
     //Meme Table functionality
     public static final String MEMES_TABLE ="MEMES";
     public static final String COLUMN_MEMES_ASSET ="asset";
     public static final String COLUMN_MEMES_NAME ="name";
+    public static final String COLUMN_CREATE_DATE ="create_date";
     public static final String COLUMN_MEMES_ID ="_id";
 
-    static final String CREATE_TABLE_MEMES = "CREATE TABLE "+MEMES_TABLE + " ( "+COLUMN_MEMES_ID + "INTEGER PRIMARY KEY AUTOINCREMENT "+ COLUMN_MEMES_ASSET + " TEX NOT NULL," + COLUMN_MEMES_NAME + " TEXT NOT NULL );";
+    static final String CREATE_TABLE_MEMES = "CREATE TABLE "+MEMES_TABLE + " ( "+COLUMN_MEMES_ID + "INTEGER PRIMARY KEY AUTOINCREMENT "+ COLUMN_MEMES_ASSET + " TEX NOT NULL," + COLUMN_MEMES_NAME + " TEXT NOT NULL,"+ COLUMN_CREATE_DATE + " INTEGER );";
 
 
     //Meme Table Annotations functionality

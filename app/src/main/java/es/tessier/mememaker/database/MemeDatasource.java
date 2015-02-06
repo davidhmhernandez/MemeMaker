@@ -8,6 +8,7 @@ import android.provider.BaseColumns;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import es.tessier.mememaker.models.Meme;
 import es.tessier.mememaker.models.MemeAnnotation;
@@ -40,6 +41,7 @@ public class MemeDatasource {
         ContentValues memeValues = new ContentValues();
         memeValues.put(MemeSQLiteHelper.COLUMN_MEMES_NAME, meme.getName());
         memeValues.put(MemeSQLiteHelper.COLUMN_MEMES_ASSET, meme.getAssetLocation());
+        memeValues.put(MemeSQLiteHelper.COLUMN_CREATE_DATE, new Date().getTime());
 
 
         long memeId = database.insert(MemeSQLiteHelper.MEMES_TABLE, null, memeValues);
@@ -78,7 +80,7 @@ public class MemeDatasource {
                 null, // selection Args
                 null, //Group by
                 null, // Having
-                null  //OrderBy
+                MemeSQLiteHelper.COLUMN_CREATE_DATE + " DESC"  //OrderBy
         );
 
         ArrayList<Meme> memes = new ArrayList<Meme>();
